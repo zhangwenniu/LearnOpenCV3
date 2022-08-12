@@ -10,8 +10,6 @@ int main(int argc, char** argv ){
 
     img_rgb = cv::imread( argv[1] );
     
-    cv::imread( argv[1] );
-
     cv::cvtColor( img_rgb, img_gry, cv::COLOR_BGR2GRAY );
     cv::pyrDown( img_gry, img_pyr );
     cv::pyrDown( img_pyr, img_pyr2 );
