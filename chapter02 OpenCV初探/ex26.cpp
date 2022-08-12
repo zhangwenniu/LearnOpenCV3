@@ -1,3 +1,4 @@
+// 示例2-6，使用cv::pyrDown来创建一个新的图像，其宽高均为原始图像的一半。
 #include <opencv2/opencv.hpp>
 
 int main( int argc, char** argv ){
