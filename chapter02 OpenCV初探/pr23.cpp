@@ -1,3 +1,4 @@
+// 读取视频文件，并将其保存为原分辨率的一半。
 #include <opencv2/opencv.hpp>
 #include <iostream>
 
