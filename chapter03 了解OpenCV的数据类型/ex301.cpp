@@ -35,3 +35,22 @@ public:
         type            = CV_MAKETYPE(depth, channels)
     };
 };
+
+
+// cv::Rect<>中的cv::DataType<>实例的例子
+template<typename _Tp> class DataType<Rect_<_Tp> >
+{
+public:
+    typedef Rect_<_Tp>                      value_type;
+    typedef Rect_<typename DataType<_Tp>::work_type>    work_type;
+    typedef _Tp                                         channel_type;
+    typedef Vec<channel_type, channels>                 vec_type;
+
+    enum {
+        generic_type    = 0,
+        depth           = DataDepth<channel_type>::value,
+        channels        = 4,
+        fmt             = ((channels-1)<<8) + DataDepth<channel_type>::fmt,
+        type            = CV_MAKETYPE(depth, channels)
+    };
+};
