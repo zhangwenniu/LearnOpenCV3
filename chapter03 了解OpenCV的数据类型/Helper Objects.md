@@ -67,3 +67,73 @@ template<> inline void cv::Ptr<FILE>::delete_obj() {
 `CV_Assert( condition )`
 
 `CV_DbgAssert( condition )`
+
+===23.3.2 : From page 56 to 60
+
+## The cv::DataType<>template
+
+`cv::DataType<>` itself is a template. 
+
+```c
+template<typename _Tp> class DataType
+{
+    typedef _Tp 	value_type;
+    typedef value_type work_type;
+    typedef value_type channel_type;
+    typedef value_type vec_type;
+    
+    enum{
+        generic_type = 1,
+        depth 		 = -1,
+        channels     = 1,
+        fmt 		 = 0,
+        type 		 = CV_MAKETYPE(depth, channels)
+    };
+};
+```
+
+```c
+template<> class DataType<float>
+{
+public:
+    typedef float 		value_type;
+    typedef value_type work_type;
+    typedef value_type channel_type;
+    typedef value_type vec_type;
+    
+    enum {
+        generic_type = 0,
+        depth        = DataDepth<channel_type>::value,
+        channels     = 1,
+        fmt        	 = DataDepth<channel_type>::fmt,
+        type         = CV_MAKETYPE(depth, channels)
+    };
+};
+```
+
+```c
+template<typename _Tp> class DataType<Rect_<_Tp> >
+{
+public:
+    typedef Rect_<_Tp> value_type;
+    typedef Rect_<typename DataType<_Tp>::worrk_type> work_type;
+    typedef _Tp channel_type;
+    typedef Vec<channel_type, channels> vect_type;
+    
+    enum {
+        generic_type = 0,
+        depth = DataDepth<channel_type>::value,
+        channels = 4,
+        fmt = ((channels - 1) << 8) + DataDepth<channel_type>::fmt,
+        type = CV_MAKETYPE(depth, channels)
+    };
+};
+```
+
+由于本科没好好学C++的Template，这段完全看不懂在讲什么。
+
+## The cv::InputArray and cv::OutputArray classes
+
+`cv::Scalar, cv::Vec, cv::Matx`, `std::vector<>`
+
+`cv::InputArray` is assumed to be const (i.e., read only).
